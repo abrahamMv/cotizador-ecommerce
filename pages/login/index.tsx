@@ -3,7 +3,7 @@ import { AuthInfo } from "../../components/UI";
 
 const LoginPage = () => {
   return (
-    <Grid container spacing={2}>
+    <Grid container>
       <Grid
         item
         xs={7}
@@ -62,7 +62,12 @@ const LoginPage = () => {
                 flexDirection: "row",
               }}
             >
-              <Checkbox defaultChecked />
+              <Checkbox
+                defaultChecked
+                sx={{
+                  borderRadius: 10,
+                }}
+              />
               <Typography
                 sx={{
                   fontSize: 15,

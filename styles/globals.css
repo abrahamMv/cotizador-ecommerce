@@ -1,3 +1,5 @@
+
+
 hr{
     width: 300px;
     height: 10px;
@@ -6,4 +8,16 @@ hr{
     margin-left: 0%;
     margin-right: 50%;
 }
+
+.logo{
+    display: flex;
+}
+.logo_direction_login{
+    justify-content: flex-end;
+}
+.logo_direction_register{
+    margin-bottom: 5;
+    justify-content: flex-start;
+}
+
 

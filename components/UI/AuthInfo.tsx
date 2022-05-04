@@ -1,19 +1,26 @@
 import { Box, Typography } from "@mui/material";
+import { useRouter } from "next/router";
+import StoreOutlinedIcon from "@mui/icons-material/StoreOutlined";
+import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 
 export const AuthInfo = () => {
+  const router = useRouter();
+
   return (
     <Box
       sx={{
         padding: 5,
-        height: "100vh",
+        height: "100%",
         backgroundColor: "primary.main",
       }}
     >
       <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-        }}
+        className={`logo ${
+          router.asPath === "/register"
+            ? "logo_direction_register"
+            : "logo_direction_login"
+        }`}
       >
         <Typography variant="h4" color="white">
           Logo
@@ -42,7 +49,14 @@ export const AuthInfo = () => {
               alignItems: "center",
             }}
           >
-            icono
+            <StoreOutlinedIcon
+              fontSize="large"
+              sx={{
+                width: 100,
+                height: 100,
+                color: "white",
+              }}
+            />
           </Box>
           <Box
             sx={{
@@ -83,7 +97,14 @@ export const AuthInfo = () => {
               alignItems: "center",
             }}
           >
-            icono
+            <DevicesOutlinedIcon
+              fontSize="large"
+              sx={{
+                width: 90,
+                height: 90,
+                color: "white",
+              }}
+            />
           </Box>
           <Box
             sx={{
@@ -124,7 +145,14 @@ export const AuthInfo = () => {
               alignItems: "center",
             }}
           >
-            icono
+            <ShareOutlinedIcon
+              fontSize="large"
+              sx={{
+                width: 100,
+                height: 100,
+                color: "white",
+              }}
+            />
           </Box>
           <Box
             sx={{
