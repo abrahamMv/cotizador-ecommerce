@@ -19,5 +19,9 @@ hr{
     margin-bottom: 5;
     justify-content: flex-start;
 }
+.error-auth {
+    font-size: 0.8rem;
+    color: #D32F2F;
+  }
 
 

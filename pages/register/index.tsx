@@ -9,14 +9,46 @@ import {
   Button,
 } from "@mui/material";
 import { AuthInfo } from "../../components/UI";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const RegisterPage = () => {
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      lastName: "",
+      typeDoc: "CC",
+      document: "",
+      email: "",
+      password: "",
+      repeatPassword: "",
+    },
+    validationSchema: yup.object({
+      name: yup.string().required("Este campo es obligatorio"),
+      lastName: yup.string().required("Este campo es obligatorio"),
+      document: yup.string().required("Este campo es obligatorio"),
+      email: yup
+        .string()
+        .email("El email no es valido")
+        .required("Este campo es obligatorio"),
+      password: yup
+        .string()
+        .required("Este campo es obligatorio")
+        .min(6, "la contraseña debe tener minimo 6 carcateres"),
+      repeatPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null])
+        .required("Este campo es obligatorio"),
+    }),
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
   return (
     <Grid
       container
       sx={{
         height: "100vh",
-        overflow: "hidden",
       }}
     >
       <Grid item xs={5}>
@@ -35,14 +67,26 @@ const RegisterPage = () => {
           </Typography>
           <hr />
 
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <Box
               sx={{
                 marginTop: 3,
               }}
             >
               <label>Nombre</label>
-              <Input fullWidth placeholder="Ingresa tu nombre" type="text" />
+              <Input
+                fullWidth
+                placeholder="Ingresa tu nombre"
+                type="text"
+                id="name"
+                value={formik.values.name}
+                onChange={formik.handleChange}
+                error={formik.errors.name && formik.touched.name ? true : false}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.name && formik.touched.name && (
+                <span className="error-auth">{formik.errors.name}</span>
+              )}
             </Box>
             <Box
               sx={{
@@ -50,7 +94,23 @@ const RegisterPage = () => {
               }}
             >
               <label>Apellido</label>
-              <Input fullWidth placeholder="Ingresa tu apellido" type="text" />
+              <Input
+                fullWidth
+                placeholder="Ingresa tu apellido"
+                type="text"
+                id="lastName"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={
+                  formik.errors.lastName && formik.touched.lastName
+                    ? true
+                    : false
+                }
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.lastName && formik.touched.lastName && (
+                <span className="error-auth">{formik.errors.lastName}</span>
+              )}
             </Box>
             <Box
               sx={{
@@ -67,6 +127,9 @@ const RegisterPage = () => {
                 <Select
                   displayEmpty
                   inputProps={{ "aria-label": "Without label" }}
+                  name="typeDoc"
+                  value={formik.values.typeDoc}
+                  onChange={formik.handleChange}
                   sx={{
                     width: "7rem",
                     height: "2.3rem",
@@ -74,16 +137,39 @@ const RegisterPage = () => {
                     marginRight: 3,
                   }}
                 >
-                  <MenuItem value="">
+                  <MenuItem value="CC">
                     <em>CC</em>
                   </MenuItem>
-                  <MenuItem>TI</MenuItem>
+                  <MenuItem value="TI">TI</MenuItem>
                 </Select>
-                <Input
-                  fullWidth
-                  placeholder="Número de documento"
-                  type="text"
-                />
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                  }}
+                >
+                  <Input
+                    sx={{
+                      width: "100%",
+                    }}
+                    fullWidth
+                    placeholder="Número de documento"
+                    type="text"
+                    id="document"
+                    value={formik.values.document}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.errors.document && formik.touched.document
+                        ? true
+                        : false
+                    }
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.errors.document && formik.touched.document && (
+                    <span className="error-auth">{formik.errors.document}</span>
+                  )}
+                </Box>
               </Box>
             </Box>
             <Box
@@ -92,7 +178,21 @@ const RegisterPage = () => {
               }}
             >
               <label>Correo electrónico</label>
-              <Input fullWidth placeholder="correo@correo.com" type="email" />
+              <Input
+                fullWidth
+                placeholder="correo@correo.com"
+                type="email"
+                id="email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={
+                  formik.errors.email && formik.touched.email ? true : false
+                }
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.email && formik.touched.email && (
+                <span className="error-auth">{formik.errors.email}</span>
+              )}
             </Box>
             <Box
               sx={{
@@ -106,20 +206,64 @@ const RegisterPage = () => {
                   justifyContent: "space-between",
                 }}
               >
-                <Input
-                  placeholder="Contraseña"
-                  type="password"
+                <Box
                   sx={{
-                    width: "45%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
                   }}
-                />
-                <Input
-                  placeholder="Repetir contraseña"
-                  type="password"
+                >
+                  <Input
+                    placeholder="Contraseña"
+                    type="password"
+                    sx={{
+                      width: "70%",
+                    }}
+                    id="password"
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.errors.password && formik.touched.password
+                        ? true
+                        : false
+                    }
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.errors.password && formik.touched.password && (
+                    <span className="error-auth">{formik.errors.password}</span>
+                  )}
+                </Box>
+                <Box
                   sx={{
-                    width: "45%",
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
                   }}
-                />
+                >
+                  <Input
+                    placeholder="Repetir contraseña"
+                    type="password"
+                    sx={{
+                      width: "70%",
+                    }}
+                    id="repeatPassword"
+                    value={formik.values.repeatPassword}
+                    onChange={formik.handleChange}
+                    error={
+                      formik.errors.repeatPassword &&
+                      formik.touched.repeatPassword
+                        ? true
+                        : false
+                    }
+                    onBlur={formik.handleBlur}
+                  />
+                  {formik.errors.repeatPassword &&
+                    formik.touched.repeatPassword && (
+                      <span className="error-auth">
+                        {formik.errors.repeatPassword}
+                      </span>
+                    )}
+                </Box>
               </Box>
             </Box>
             <Box
@@ -161,6 +305,7 @@ const RegisterPage = () => {
                 </Typography>
               </Box>
               <Button
+                type="submit"
                 variant="contained"
                 sx={{
                   width: 180,
