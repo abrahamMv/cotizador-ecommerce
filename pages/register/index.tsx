@@ -1,24 +1,18 @@
-import {
-  Box,
-  Grid,
-  Typography,
-  Input,
-  Select,
-  MenuItem,
-  Checkbox,
-  Button,
-} from "@mui/material";
+import { Box, Grid, Typography, Input, Checkbox, Button } from "@mui/material";
 import { AuthInfo } from "../../components/UI";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useContext } from "react";
+import { AuthContext } from "../../context/auth";
+import NextLink from "next/link";
 
 const RegisterPage = () => {
+  const { createUser } = useContext(AuthContext);
   const formik = useFormik({
     initialValues: {
       name: "",
       lastName: "",
-      typeDoc: "CC",
-      document: "",
+      phone: "",
       email: "",
       password: "",
       repeatPassword: "",
@@ -26,7 +20,7 @@ const RegisterPage = () => {
     validationSchema: yup.object({
       name: yup.string().required("Este campo es obligatorio"),
       lastName: yup.string().required("Este campo es obligatorio"),
-      document: yup.string().required("Este campo es obligatorio"),
+      phone: yup.string().required("Este campo es obligatorio"),
       email: yup
         .string()
         .email("El email no es valido")
@@ -34,14 +28,21 @@ const RegisterPage = () => {
       password: yup
         .string()
         .required("Este campo es obligatorio")
-        .min(6, "la contraseña debe tener minimo 6 carcateres"),
+        .min(8, "la contraseña debe tener minimo 6 carcateres"),
       repeatPassword: yup
         .string()
-        .oneOf([yup.ref("password"), null])
+        .oneOf([yup.ref("password"), "las contraseñas no coinciden"])
         .required("Este campo es obligatorio"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      createUser({
+        firstName: values.name,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+        phone: values.phone,
+        role: "USER",
+      });
     },
   });
   return (
@@ -117,60 +118,26 @@ const RegisterPage = () => {
                 marginTop: 3,
               }}
             >
-              <label>Documento</label>
-              <Box
+              <label>Celular</label>
+
+              <Input
                 sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
+                  width: "100%",
                 }}
-              >
-                <Select
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                  name="typeDoc"
-                  value={formik.values.typeDoc}
-                  onChange={formik.handleChange}
-                  sx={{
-                    width: "7rem",
-                    height: "2.3rem",
-                    borderRadius: 3,
-                    marginRight: 3,
-                  }}
-                >
-                  <MenuItem value="CC">
-                    <em>CC</em>
-                  </MenuItem>
-                  <MenuItem value="TI">TI</MenuItem>
-                </Select>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                  }}
-                >
-                  <Input
-                    sx={{
-                      width: "100%",
-                    }}
-                    fullWidth
-                    placeholder="Número de documento"
-                    type="text"
-                    id="document"
-                    value={formik.values.document}
-                    onChange={formik.handleChange}
-                    error={
-                      formik.errors.document && formik.touched.document
-                        ? true
-                        : false
-                    }
-                    onBlur={formik.handleBlur}
-                  />
-                  {formik.errors.document && formik.touched.document && (
-                    <span className="error-auth">{formik.errors.document}</span>
-                  )}
-                </Box>
-              </Box>
+                fullWidth
+                placeholder="Número de celular"
+                type="text"
+                id="phone"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+                error={
+                  formik.errors.phone && formik.touched.phone ? true : false
+                }
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.phone && formik.touched.phone && (
+                <span className="error-auth">{formik.errors.phone}</span>
+              )}
             </Box>
             <Box
               sx={{
@@ -260,7 +227,7 @@ const RegisterPage = () => {
                   {formik.errors.repeatPassword &&
                     formik.touched.repeatPassword && (
                       <span className="error-auth">
-                        {formik.errors.repeatPassword}
+                        {formik.errors.repeatPassword.substring(51, 80)}
                       </span>
                     )}
                 </Box>
@@ -279,30 +246,22 @@ const RegisterPage = () => {
                   flexDirection: "row",
                 }}
               >
-                <Checkbox
-                  defaultChecked
-                  sx={{
-                    borderRadius: 10,
-                  }}
-                />{" "}
-                <Typography sx={{ fontSize: 12, margin: 1 }} color="black">
-                  Acepto los{" "}
-                  <span
-                    style={{
-                      color: "#5603AD",
-                    }}
-                  >
-                    términos
-                  </span>{" "}
-                  y{" "}
-                  <span
-                    style={{
-                      color: "#5603AD",
-                    }}
-                  >
-                    condiciones
-                  </span>{" "}
+                <Typography sx={{ fontSize: 15, margin: 1 }} color="black">
+                  ¿ ya tienes cuenta ?
                 </Typography>
+                <NextLink href="/login">
+                  <Typography
+                    color="primary"
+                    sx={{
+                      fontSize: 15,
+                      margin: 1,
+                      marginLeft: 0,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Ingresa
+                  </Typography>
+                </NextLink>
               </Box>
               <Button
                 type="submit"

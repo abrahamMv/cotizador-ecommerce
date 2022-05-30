@@ -1,9 +1,13 @@
-import { Box, Button, Checkbox, Grid, Input, Typography } from "@mui/material";
+import { Box, Button, Grid, Input, Typography } from "@mui/material";
 import { AuthInfo } from "../../components/UI";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useContext } from "react";
+import { AuthContext } from "../../context/auth";
+import NextLink from "next/link";
 
 const LoginPage = () => {
+  const { login } = useContext(AuthContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,10 +21,13 @@ const LoginPage = () => {
       password: yup
         .string()
         .required("Este campo es obligatorio")
-        .min(6, "la contraseña debe tener minimo 6 carcateres"),
+        .min(8, "la contraseña debe tener minimo 6 carcateres"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      login({
+        email: values.email,
+        password: values.password,
+      });
     },
   });
   return (
@@ -113,12 +120,6 @@ const LoginPage = () => {
                   flexDirection: "row",
                 }}
               >
-                <Checkbox
-                  defaultChecked
-                  sx={{
-                    borderRadius: 10,
-                  }}
-                />
                 <Typography
                   sx={{
                     fontSize: 15,
@@ -126,18 +127,21 @@ const LoginPage = () => {
                     marginLeft: 0,
                   }}
                 >
-                  Mantener
+                  ¿No tienes cuenta?
                 </Typography>
-                <Typography
-                  color="primary"
-                  sx={{
-                    fontSize: 15,
-                    margin: 1,
-                    marginLeft: 0,
-                  }}
-                >
-                  sesión iniciada
-                </Typography>
+                <NextLink href="/register">
+                  <Typography
+                    color="primary"
+                    sx={{
+                      fontSize: 15,
+                      margin: 1,
+                      marginLeft: 0,
+                      cursor: "pointer",
+                    }}
+                  >
+                    Registrate
+                  </Typography>
+                </NextLink>
               </Box>
               <Button
                 variant="contained"
