@@ -8,6 +8,7 @@ export const Footer = () => {
         sx={{
           color: "gray",
           fontWeight: "light",
+          fontSize: "13px",
         }}
       >
         Rubén Martínez, Abraham Martínez, Gabriel Ramírez, Bryan Henríquez ☺

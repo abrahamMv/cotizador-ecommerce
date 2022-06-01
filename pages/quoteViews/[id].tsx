@@ -7,7 +7,8 @@ import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
 import { TableBodyProducts } from "../../components/UI";
 
 const index = () => {
-  const { getQuotationBYId, quotation } = useContext(QuotationContext);
+  const { getQuotationBYId, quotation, likeQuotation } =
+    useContext(QuotationContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -44,6 +45,7 @@ const index = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
+                alignItems: "flex-end",
               }}
             >
               <Button
@@ -56,6 +58,9 @@ const index = () => {
                   marginTop: 2,
                   fontSize: 10,
                 }}
+                onClick={() => {
+                  likeQuotation(router.query.id as string, router);
+                }}
               >
                 <CheckCircleOutlinedIcon />
                 Dar favorito
@@ -64,9 +69,10 @@ const index = () => {
                 style={{
                   fontSize: "12px",
                   color: "gray",
+                  marginTop: "12px",
                 }}
               >
-                69 Favoritos
+                {quotation?.likes.length} Favoritos
               </span>
             </div>
           </div>

@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Rating } from "@mui/material";
 import { GetBestQualificated } from "../../interfaces";
 import { useRouter } from "next/router";
 
@@ -26,6 +26,11 @@ export const FavoriteProducts = ({ product }: Props) => {
       >
         {product.name}
       </Typography>
+      <Rating
+        name="simple-controlled"
+        value={product?.score.score}
+        precision={0.5}
+      />
       <Button
         variant="contained"
         sx={{

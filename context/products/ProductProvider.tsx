@@ -1,8 +1,10 @@
+import { NextRouter } from "next/router";
 import { FC, useReducer } from "react";
 import { ProductContext, productReducer } from ".";
 import { apiEcommerce } from "../../config";
 import { PropsChildren } from "../../interfaces";
 import { GetBestQualificated } from "../../interfaces";
+import { credentials } from "../../utils";
 
 export interface ProductState {
   bestProducts: GetBestQualificated[];
@@ -38,12 +40,36 @@ export const ProductsProvider: FC<PropsChildren> = ({ children }) => {
       console.log(error);
     }
   };
+
+  const qualifyProduct = async (
+    id: string,
+    redirect: NextRouter,
+    score: number | null
+  ) => {
+    if (!credentials.getToken()) {
+      redirect.push("/login");
+    } else {
+      try {
+        const { data } = await apiEcommerce.put(`/product/qualify`, {
+          product_id: id,
+          score,
+        });
+
+        if (data.status) {
+          getProductById(id);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <ProductContext.Provider
       value={{
         ...state,
         getBestProductQualificated,
         getProductById,
+        qualifyProduct,
       }}
     >
       {children}

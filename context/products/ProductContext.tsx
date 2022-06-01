@@ -1,3 +1,4 @@
+import { NextRouter } from "next/router";
 import { createContext } from "react";
 import { GetBestQualificated } from "../../interfaces";
 
@@ -7,6 +8,11 @@ interface ContextProps {
 
   getBestProductQualificated: () => Promise<void>;
   getProductById: (id: string) => Promise<void>;
+  qualifyProduct: (
+    id: string,
+    redirect: NextRouter,
+    score: number | null
+  ) => Promise<void>;
 }
 
 export const ProductContext = createContext({} as ContextProps);

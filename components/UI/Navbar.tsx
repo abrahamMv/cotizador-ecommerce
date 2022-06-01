@@ -29,7 +29,7 @@ export const Navbar = () => {
                 router.pathname === "/" && "list_nav_item_active"
               } list_nav_item`}
             >
-              inicio
+              Inicio
             </ListItem>
           </Link>
           <Link href="/quote">
@@ -38,7 +38,7 @@ export const Navbar = () => {
                 router.pathname === "/quote" && "list_nav_item_active"
               } list_nav_item`}
             >
-              cotizaciones
+              Cotizaciones
             </ListItem>
           </Link>
           <Link href="/catalog">
@@ -47,7 +47,7 @@ export const Navbar = () => {
                 router.pathname === "/catalog" && "list_nav_item_active"
               } list_nav_item `}
             >
-              catalogo
+              Catalogo
             </ListItem>
           </Link>
         </List>
