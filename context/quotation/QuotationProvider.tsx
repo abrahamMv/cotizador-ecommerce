@@ -4,6 +4,7 @@ import {
   PropsChildren,
   BestQuotationResponse,
   GetQuotationByUserResponse,
+  CreateQuotation,
 } from "../../interfaces";
 import { QuotationContext, quotationReducer } from "./";
 
@@ -29,6 +30,16 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
     quotationReducer,
     Quotation_INITIAL_STATE
   );
+
+  const createQuotation = async (values: CreateQuotation) => {
+    try {
+      const { data } = await apiEcommerce.post("/quotation", values);
+
+      getQuotationByUser(data.user_id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getAllQuotations = async () => {
     try {
@@ -104,6 +115,7 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
     <QuotationContext.Provider
       value={{
         ...state,
+        createQuotation,
         getAllQuotations,
         getBestQuotations,
         getQuotationBYId,

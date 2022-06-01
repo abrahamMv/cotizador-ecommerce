@@ -1,14 +1,18 @@
-import { Typography } from "@mui/material";
+import { Typography, Button } from "@mui/material";
 import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Layout } from "../../components/layout/Layout";
 import { TableBodyUser } from "../../components/UI";
+import { ModalCreateQuotations } from "../../components/UI/ModalCreateQuotations";
 import { QuotationContext } from "../../context/quotation";
 import { credentials } from "../../utils";
 
 const index = () => {
   const router = useRouter();
-  const { getQuotationByUser, myQuotation } = useContext(QuotationContext);
+  const { getQuotationByUser, myQuotation, createQuotation } =
+    useContext(QuotationContext);
+
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (router.query.id) {
@@ -21,20 +25,36 @@ const index = () => {
       <div className="container_home">
         <div className="content_home">
           <div>
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-              }}
-            >
-              Hola,{" "}
-              {!credentials.getUser()
-                ? "test"
-                : credentials.getUser().firstName +
-                  " " +
-                  credentials.getUser().lastName}
-            </Typography>
-            <span>Estas son las cotizaciones que has creado.</span>
+            <div className="head_catalog">
+              <div>
+                <Typography
+                  variant="h5"
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                >
+                  Hola{" "}
+                  {!credentials.getUser()
+                    ? ""
+                    : credentials.getUser().firstName +
+                      ", " +
+                      credentials.getUser().lastName}
+                </Typography>
+                <span>Estas son las cotizaciones que has creado.</span>
+              </div>
+              <Button
+                variant="contained"
+                sx={{
+                  width: 180,
+                  height: 35,
+                  backgroundColor: "#AB4FE9",
+                  borderRadius: "1rem",
+                }}
+                onClick={() => setOpenModal(true)}
+              >
+                Crear Cotización
+              </Button>
+            </div>
             <Typography
               variant="h6"
               sx={{
@@ -67,6 +87,11 @@ const index = () => {
               </tbody>
             </table>
           </div>
+          <ModalCreateQuotations
+            open={openModal}
+            handleClose={setOpenModal}
+            createQuotation={createQuotation}
+          />
         </div>
       </div>
     </Layout>

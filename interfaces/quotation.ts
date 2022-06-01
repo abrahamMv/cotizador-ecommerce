@@ -61,3 +61,8 @@ export interface ProductUser {
   price: number;
   createdAt: string;
 }
+
+export interface CreateQuotation {
+  name: string;
+  description: string;
+}

@@ -1,5 +1,6 @@
 import { NextRouter } from "next/router";
 import { createContext } from "react";
+import { CreateQuotation } from "../../interfaces/quotation";
 import {
   BestQuotationResponse,
   GetQuotationByUserResponse,
@@ -10,6 +11,7 @@ interface ContextProps {
   quotation?: BestQuotationResponse;
   myQuotation?: GetQuotationByUserResponse[];
 
+  createQuotation: (values: CreateQuotation) => Promise<void>;
   getAllQuotations: () => Promise<void>;
   getBestQuotations: () => Promise<void>;
   getQuotationBYId: (id: string) => Promise<void>;
