@@ -30,6 +30,17 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
     Quotation_INITIAL_STATE
   );
 
+  const getAllQuotations = async () => {
+    try {
+      const { data } = await apiEcommerce.get<BestQuotationResponse[]>(
+        "/quotation/"
+      );
+      dispatch({ type: "Quotation - allQuotations", payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getBestQuotations = async () => {
     try {
       const { data } = await apiEcommerce.get<BestQuotationResponse[]>(
@@ -93,6 +104,7 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
     <QuotationContext.Provider
       value={{
         ...state,
+        getAllQuotations,
         getBestQuotations,
         getQuotationBYId,
         getQuotationByUser,
