@@ -14,7 +14,7 @@ const index = () => {
     if (router.query.id) {
       getQuotationByUser(router.query.id as string);
     }
-  }, [router.query]);
+  }, []);
 
   return (
     <Layout>

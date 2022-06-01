@@ -39,7 +39,7 @@ export const credentials = {
     getUser: () =>{
         
         if (typeof window !== "undefined") {
-            return JSON.parse(window.localStorage.getItem('user')!);
+                return JSON.parse(window.localStorage.getItem('user') as string);
           }
     },
 
