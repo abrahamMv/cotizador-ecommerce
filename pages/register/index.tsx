@@ -247,7 +247,7 @@ const RegisterPage = () => {
                 }}
               >
                 <Typography sx={{ fontSize: 15, margin: 1 }} color="black">
-                  ¿ ya tienes cuenta ?
+                  ¿ ya tienes una cuenta ?
                 </Typography>
                 <NextLink href="/login">
                   <Typography

@@ -4,7 +4,7 @@ import { ProductState } from './ProductProvider'
 
    type ProductActionType = 
    | {type: 'Product - bestProducts', payload: GetBestQualificated[]}
-   | {type : 'Product - selectedProduct', payload: GetBestQualificated | null }
+   | {type : 'Product - selectedProduct', payload: GetBestQualificated}
 
      export const productReducer = (state: ProductState, action: ProductActionType): ProductState =>{
 

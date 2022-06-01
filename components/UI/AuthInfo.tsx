@@ -22,8 +22,17 @@ export const AuthInfo = () => {
             : "logo_direction_login"
         }`}
       >
-        <Typography variant="h4" color="white">
-          Logo
+        <img src="Logo_White.png" className="logo_navbar" alt="logo" />
+        <Typography
+          variant="h4"
+          sx={{
+            fontWeight: "bold",
+            marginTop: 1,
+            marginBottom: 2,
+            color: "white",
+          }}
+        >
+          /Cetre
         </Typography>
       </Box>
       <Box
