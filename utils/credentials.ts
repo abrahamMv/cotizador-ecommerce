@@ -8,27 +8,39 @@ export const credentials = {
     },
 
     _store: (data:LoginResponse) =>{
-        try {
-            window.localStorage.setItem('token', data.token);
-            window.localStorage.setItem('user', JSON.stringify(data.user))
-            return true
-        } catch (error) {
-            console.log(error);
-        }
+       
+        if (typeof window !== "undefined") {
+            try {
+                window.localStorage.setItem('token', data.token);
+                window.localStorage.setItem('user', JSON.stringify(data.user))
+                return true
+            } catch (error) {
+                console.log(error);
+            }
+          }
     },
 
     _clear: () =>{
-        window.localStorage.removeItem('token');
-        window.localStorage.removeItem('user');
+      
+        if (typeof window !== "undefined") {
+            window.localStorage.removeItem('token');
+            window.localStorage.removeItem('user');
+          }
         
     },
 
     getToken: () =>{
-        return window.localStorage.getItem('token')
+        if (typeof window !== "undefined") {
+            return window.localStorage.getItem('token')
+          }
+        
     },
 
     getUser: () =>{
-        return JSON.parse(window.localStorage.getItem('user')!);
+        
+        if (typeof window !== "undefined") {
+            return JSON.parse(window.localStorage.getItem('user')!);
+          }
     },
 
 }

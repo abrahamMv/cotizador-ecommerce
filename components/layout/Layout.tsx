@@ -1,10 +1,11 @@
 import { FC } from "react";
 import { PropsChildren } from "../../interfaces";
+import { Navbar } from "../UI";
 
 export const Layout: FC<PropsChildren> = ({ children }) => {
   return (
     <>
-      <h1>layout</h1>
+      <Navbar />
       <main>{children}</main>
     </>
   );

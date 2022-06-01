@@ -4,15 +4,24 @@ import { ThemeProvider } from "@mui/system";
 import { CssBaseline } from "@mui/material";
 import { lightMode } from "../themes";
 import { AuthProvider } from "../context/auth";
+import { ProductsProvider } from "../context/products";
+import { ShopProvider } from "../context/shop";
+import { QuotationProvider } from "../context/quotation";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <AuthProvider>
-      <ThemeProvider theme={lightMode}>
-        <CssBaseline />
-        <Component {...pageProps} />
-      </ThemeProvider>
-    </AuthProvider>
+    <QuotationProvider>
+      <ShopProvider>
+        <ProductsProvider>
+          <AuthProvider>
+            <ThemeProvider theme={lightMode}>
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </AuthProvider>
+        </ProductsProvider>
+      </ShopProvider>
+    </QuotationProvider>
   );
 }
 

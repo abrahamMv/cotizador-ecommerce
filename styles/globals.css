@@ -22,6 +22,39 @@ hr{
 .error-auth {
     font-size: 0.8rem;
     color: #D32F2F;
-  }
+}
+
+.nav_container{
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+}
+
+.container_list_nav{
+ margin-left: 4rem;
+}
+.list_nav{
+    display: flex;
+    font-weight: bold;
+}
+.list_nav_item_active{
+    border-bottom: 2px solid #5603AD;
+    
+}
+.container_perfil{
+    display: flex;
+}
+.container_logo{
+    display: flex;
+}
+.logo_navbar{
+    width: 3.5rem;
+    height: 3.5rem;
+    margin-right: 4px;
+}
+.name_navbar{
+    color: gray;
+    margin-right: 4px;
+}
 
 
