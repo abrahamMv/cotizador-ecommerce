@@ -7,18 +7,20 @@ export const Navbar = () => {
   const router = useRouter();
   return (
     <nav className="nav_container">
-      <div className="container_logo">
-        <img src="Logo_Purple.png" className="logo_navbar" alt="logo" />
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: "bold",
-            marginTop: 1,
-          }}
-        >
-          /Cetre
-        </Typography>
-      </div>
+      <Link href="/">
+        <div className="container_logo">
+          <img src="Logo_Purple.png" className="logo_navbar" alt="logo" />
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              marginTop: 1,
+            }}
+          >
+            /Cetre
+          </Typography>
+        </div>
+      </Link>
       <div className="container_list_nav">
         <List className="list_nav">
           <Link href="/">
@@ -27,7 +29,7 @@ export const Navbar = () => {
                 router.pathname === "/" && "list_nav_item_active"
               } list_nav_item`}
             >
-              inicio
+              Inicio
             </ListItem>
           </Link>
           <Link href="/quote">
@@ -36,7 +38,7 @@ export const Navbar = () => {
                 router.pathname === "/quote" && "list_nav_item_active"
               } list_nav_item`}
             >
-              cotizaciones
+              Cotizaciones
             </ListItem>
           </Link>
           <Link href="/catalog">
@@ -45,7 +47,7 @@ export const Navbar = () => {
                 router.pathname === "/catalog" && "list_nav_item_active"
               } list_nav_item `}
             >
-              catalogo
+              Catalogo
             </ListItem>
           </Link>
         </List>
@@ -74,7 +76,6 @@ export const Navbar = () => {
               height: 35,
               backgroundColor: "#AB4FE9",
               borderRadius: "1rem",
-              marginTop: 2,
             }}
           >
             registrarse

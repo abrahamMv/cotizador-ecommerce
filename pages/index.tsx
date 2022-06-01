@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import { Layout } from "../components/layout/Layout";
 import { FavoriteProducts } from "../components/UI";
 import { ProductContext } from "../context/products";
+import { RenderTable } from "./quote";
 
 const Home: NextPage = () => {
   const { getBestProductQualificated, bestProducts } =
@@ -46,6 +47,7 @@ const Home: NextPage = () => {
               <FavoriteProducts key={product.id} product={product} />
             ))}
           </div>
+          <RenderTable />
         </div>
       </div>
     </Layout>

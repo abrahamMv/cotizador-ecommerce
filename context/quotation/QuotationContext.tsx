@@ -1,3 +1,4 @@
+import { NextRouter } from "next/router";
 import { createContext } from "react";
 import {
   BestQuotationResponse,
@@ -9,9 +10,11 @@ interface ContextProps {
   quotation?: BestQuotationResponse;
   myQuotation?: GetQuotationByUserResponse[];
 
+  getUserQuotations: () => Promise<void>;
   getBestQuotations: () => Promise<void>;
   getQuotationBYId: (id: string) => Promise<void>;
   getQuotationByUser: (id: string) => Promise<void>;
+  likeQuotation: (id: string, redirect: NextRouter) => Promise<void>;
 }
 
 export const QuotationContext = createContext({} as ContextProps);
