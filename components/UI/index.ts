@@ -5,3 +5,4 @@ export * from "./TableBody";
 export * from "./TableBodyPrices";
 export * from "./TableBodyProducts";
 export * from "./TableBodyUser";
+export * from "./Footer";

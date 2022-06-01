@@ -1,19 +1,30 @@
 import { useRouter } from "next/router";
 import { Layout } from "../../components/layout/Layout";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/products";
-import { Typography } from "@mui/material";
+import { QuotationContext } from "../../context/quotation";
+import { Typography, Rating } from "@mui/material";
 import { TableBodyPrices } from "../../components/UI";
+import { credentials } from "../../utils/credentials";
 
 const index = () => {
   const router = useRouter();
-  const { getProductById, product } = useContext(ProductContext);
+  const { getProductById, product, qualifyProduct } =
+    useContext(ProductContext);
 
+  const { getQuotationByUser, myQuotation, addToQuotation } =
+    useContext(QuotationContext);
+
+  const [calification, setCalification] = useState<number | null>(5);
   useEffect(() => {
     if (router.query.id) {
       getProductById(router.query.id as string);
     }
   }, [router.query]);
+
+  useEffect(() => {
+    getQuotationByUser(credentials.getUser()?.id);
+  }, []);
 
   return (
     <Layout>
@@ -90,6 +101,19 @@ const index = () => {
               >
                 {product?.description}
               </span>
+              <Rating
+                name="simple-controlled"
+                value={calification}
+                precision={0.5}
+                onChange={(_, newValue) => {
+                  setCalification(newValue);
+                  qualifyProduct(
+                    product?.id.toString() as string,
+                    router,
+                    newValue
+                  );
+                }}
+              />
             </div>
             <div className="info_right_product">
               <Typography
@@ -100,7 +124,7 @@ const index = () => {
               >
                 Lista de Precios
               </Typography>
-              <table>
+              <table className="table_quotation">
                 <thead>
                   <tr>
                     <th>Tienda</th>
@@ -112,7 +136,12 @@ const index = () => {
                 <tbody>
                   {product?.prices.length! > 0 &&
                     product?.prices.map((shop) => (
-                      <TableBodyPrices key={shop.id} shopInfo={shop} />
+                      <TableBodyPrices
+                        myQuotation={myQuotation}
+                        key={shop.id}
+                        shopInfo={shop}
+                        addToQuotation={addToQuotation}
+                      />
                     ))}
                 </tbody>
               </table>

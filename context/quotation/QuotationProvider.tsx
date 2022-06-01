@@ -7,16 +7,21 @@ import {
 } from "../../interfaces";
 import { QuotationContext, quotationReducer } from "./";
 
+import { NextRouter } from "next/router";
+import { credentials } from "../../utils";
+
 export interface QuotationState {
   bestQuotations: BestQuotationResponse[];
   quotation?: BestQuotationResponse;
   myQuotation?: GetQuotationByUserResponse[];
+  quotationByUser: any;
 }
 
 const Quotation_INITIAL_STATE: QuotationState = {
   bestQuotations: [],
   quotation: undefined,
-  myQuotation: undefined,
+  myQuotation: [],
+  quotationByUser: [],
 };
 
 export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
@@ -54,6 +59,36 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
       console.log(error);
     }
   };
+
+  const likeQuotation = async (id: string, redirect: NextRouter) => {
+    if (!credentials.getToken()) {
+      redirect.push("/login");
+    } else {
+      try {
+        const { data } = await apiEcommerce.put(`/quotation/like/${id}`);
+
+        if (data.status) {
+          getQuotationBYId(id);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const addToQuotation = async (id: string, shopProductId: string) => {
+    try {
+      const { data } = await apiEcommerce.put("/quotation/add/product", {
+        quotation_id: id,
+        shop_has_product_id: shopProductId,
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <QuotationContext.Provider
       value={{
@@ -61,6 +96,8 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
         getBestQuotations,
         getQuotationBYId,
         getQuotationByUser,
+        likeQuotation,
+        addToQuotation,
       }}
     >
       {children}
