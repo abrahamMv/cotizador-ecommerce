@@ -1,17 +1,22 @@
 import { FC, useReducer } from "react";
 import { apiEcommerce } from "../../config";
-import { PropsChildren } from "../../interfaces";
-import { BestQuotationResponse } from "../../interfaces/quotation";
+import {
+  PropsChildren,
+  BestQuotationResponse,
+  GetQuotationByUserResponse,
+} from "../../interfaces";
 import { QuotationContext, quotationReducer } from "./";
 
 export interface QuotationState {
   bestQuotations: BestQuotationResponse[];
   quotation?: BestQuotationResponse;
+  myQuotation?: GetQuotationByUserResponse[];
 }
 
 const Quotation_INITIAL_STATE: QuotationState = {
   bestQuotations: [],
   quotation: undefined,
+  myQuotation: undefined,
 };
 
 export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
@@ -32,8 +37,19 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
   };
   const getQuotationBYId = async (id: string) => {
     try {
-      const { data } = await apiEcommerce.get(`/quotation/${id}`);
+      const { data } = await apiEcommerce.get<BestQuotationResponse>(
+        `/quotation/${id}`
+      );
       dispatch({ type: "Quotation - quotationSelected", payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getQuotationByUser = async (id: string) => {
+    try {
+      const { data } = await apiEcommerce.get(`/quotation/all/${id}`);
+      dispatch({ type: "Quotation - quotationByUser", payload: data });
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +60,7 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
         ...state,
         getBestQuotations,
         getQuotationBYId,
+        getQuotationByUser,
       }}
     >
       {children}

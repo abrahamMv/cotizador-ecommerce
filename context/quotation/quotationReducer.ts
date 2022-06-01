@@ -1,10 +1,11 @@
-import { BestQuotationResponse } from '../../interfaces/quotation'
+import { BestQuotationResponse, GetQuotationByUserResponse } from '../../interfaces/'
 import { QuotationState } from './QuotationProvider'
 
 
    type QuotationActionType = 
    | {type: 'Quotation - bestQuotations', payload: BestQuotationResponse[]}
    | {type: 'Quotation - quotationSelected', payload: BestQuotationResponse}
+   | {type: 'Quotation - quotationByUser', payload: GetQuotationByUserResponse[]}
 
      export const quotationReducer = (state: QuotationState, action: QuotationActionType): QuotationState =>{
 
@@ -19,6 +20,12 @@ import { QuotationState } from './QuotationProvider'
               ...state,
               quotation: action.payload
             }
+
+            case 'Quotation - quotationByUser':
+                return{
+                  ...state,
+                  myQuotation: action.payload
+                }
 
                 default:
                   return state
