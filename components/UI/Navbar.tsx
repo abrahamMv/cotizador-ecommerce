@@ -7,18 +7,20 @@ export const Navbar = () => {
   const router = useRouter();
   return (
     <nav className="nav_container">
-      <div className="container_logo">
-        <img src="Logo_Purple.png" className="logo_navbar" alt="logo" />
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: "bold",
-            marginTop: 1,
-          }}
-        >
-          /Cetre
-        </Typography>
-      </div>
+      <Link href="/">
+        <div className="container_logo">
+          <img src="Logo_Purple.png" className="logo_navbar" alt="logo" />
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "bold",
+              marginTop: 1,
+            }}
+          >
+            /Cetre
+          </Typography>
+        </div>
+      </Link>
       <div className="container_list_nav">
         <List className="list_nav">
           <Link href="/">
@@ -74,7 +76,6 @@ export const Navbar = () => {
               height: 35,
               backgroundColor: "#AB4FE9",
               borderRadius: "1rem",
-              marginTop: 2,
             }}
           >
             registrarse

@@ -20,21 +20,23 @@ export const TableBody = ({ quotation }: Props) => {
       <td>{quotation.user.firstName + " " + quotation.user.lastName}</td>
       <td>{quotation.products.length}</td>
       <td>{quotation.likes.length}</td>
-      <Button
-        variant="contained"
-        sx={{
-          width: 80,
-          height: 35,
-          backgroundColor: "#8367C7",
-          borderRadius: "1rem",
-          marginTop: 2,
-          fontSize: 10,
-        }}
-        onClick={() => handleView(quotation.id)}
-      >
-        <KeyboardArrowDownOutlinedIcon />
-        ver
-      </Button>
+      <td>
+        <Button
+          variant="contained"
+          sx={{
+            width: 80,
+            height: 35,
+            backgroundColor: "#8367C7",
+            borderRadius: "1rem",
+            marginTop: 2,
+            fontSize: 10,
+          }}
+          onClick={() => handleView(quotation.id)}
+        >
+          <KeyboardArrowDownOutlinedIcon />
+          ver
+        </Button>
+      </td>
     </tr>
   );
 };

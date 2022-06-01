@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
 import { Layout } from "../../components/layout/Layout";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProductContext } from "../../context/products";
-import { Typography } from "@mui/material";
+import { Typography, Rating } from "@mui/material";
 import { TableBodyPrices } from "../../components/UI";
 
 const index = () => {
   const router = useRouter();
   const { getProductById, product } = useContext(ProductContext);
 
+  const [calification, setCalification] = useState<number | null>(5);
   useEffect(() => {
     if (router.query.id) {
       getProductById(router.query.id as string);
@@ -90,6 +91,14 @@ const index = () => {
               >
                 {product?.description}
               </span>
+              <Rating
+                name="simple-controlled"
+                value={calification}
+                precision={0.5}
+                onChange={(event, newValue) => {
+                  setCalification(newValue);
+                }}
+              />
             </div>
             <div className="info_right_product">
               <Typography

@@ -28,13 +28,12 @@ const index = () => {
                   fontWeight: "bold",
                 }}
               >
-                Nombre de la Cotización
+                {quotation?.name}
               </Typography>
-              <Typography variant="h6">{quotation?.name}</Typography>
+              <Typography variant="h6">{quotation?.description}</Typography>
               <span
                 style={{
                   fontSize: "12px",
-                  color: "gray",
                 }}
               >
                 Creada por:{" "}
