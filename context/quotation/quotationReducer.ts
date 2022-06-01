@@ -10,7 +10,8 @@ type QuotationActionType =
   | {
       type: "Quotation - quotationByUser";
       payload: GetQuotationByUserResponse[];
-    };
+    }
+  | { type: "Quotation - allQuotations"; payload: BestQuotationResponse[] };
 
 export const quotationReducer = (
   state: QuotationState,
@@ -31,6 +32,11 @@ export const quotationReducer = (
       return {
         ...state,
         myQuotation: action.payload,
+      };
+    case "Quotation - allQuotations":
+      return {
+        ...state,
+        bestQuotations: action.payload,
       };
     default:
       return state;

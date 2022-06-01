@@ -10,6 +10,7 @@ interface ContextProps {
   quotation?: BestQuotationResponse;
   myQuotation?: GetQuotationByUserResponse[];
 
+  getAllQuotations: () => Promise<void>;
   getBestQuotations: () => Promise<void>;
   getQuotationBYId: (id: string) => Promise<void>;
   getQuotationByUser: (id: string) => Promise<void>;

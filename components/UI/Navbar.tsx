@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { credentials } from "../../utils";
 
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+
 export const Navbar = () => {
   const router = useRouter();
   return (
@@ -47,28 +49,41 @@ export const Navbar = () => {
                 router.pathname === "/catalog" && "list_nav_item_active"
               } list_nav_item `}
             >
-              Catalogo
+              Catálogo
             </ListItem>
           </Link>
         </List>
       </div>
       {credentials.getToken() ? (
-        <div className="container_perfil">
-          <p className="name_navbar">
-            {credentials.getUser().firstName +
-              " " +
-              credentials.getUser().lastName}
-          </p>
-          <Avatar
-            src=""
-            alt="profile photo"
-            sx={{
-              marginTop: 1,
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Link href={`/perfil/${credentials.getUser().id}`}>
+            <div className="container_perfil">
+              <p className="name_navbar">
+                {credentials.getUser().firstName +
+                  " " +
+                  credentials.getUser().lastName}
+              </p>
+              <Avatar
+                src=""
+                alt="profile photo"
+                sx={{
+                  marginTop: 1,
+                }}
+              />
+            </div>
+          </Link>
+          <div
+            style={{ cursor: "pointer", marginLeft: "0.5rem" }}
+            onClick={() => {
+              credentials._clear();
+              router.push("/login");
             }}
-          />
+          >
+            <PowerSettingsNewIcon />
+          </div>
         </div>
       ) : (
-        <Link href="/register">
+        <Link href="/login">
           <Button
             variant="contained"
             sx={{
@@ -78,7 +93,7 @@ export const Navbar = () => {
               borderRadius: "1rem",
             }}
           >
-            registrarse
+            Iniciar Sesión
           </Button>
         </Link>
       )}

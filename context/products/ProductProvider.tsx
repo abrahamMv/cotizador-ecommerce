@@ -19,6 +19,16 @@ const Products_INITIAL_STATE: ProductState = {
 export const ProductsProvider: FC<PropsChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, Products_INITIAL_STATE);
 
+  const getAllProducts = async () => {
+    try {
+      const { data } = await apiEcommerce.get<GetBestQualificated[]>(
+        "/product/"
+      );
+      dispatch({ type: "Product - bestProducts", payload: data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getBestProductQualificated = async () => {
     try {
       const { data } = await apiEcommerce.get<GetBestQualificated[]>(
@@ -67,6 +77,7 @@ export const ProductsProvider: FC<PropsChildren> = ({ children }) => {
     <ProductContext.Provider
       value={{
         ...state,
+        getAllProducts,
         getBestProductQualificated,
         getProductById,
         qualifyProduct,

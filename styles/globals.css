@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap");
+
+* {
+  font-family: "Quicksand", sans-serif !important;
+}
+
 :root {
   --shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
@@ -52,6 +58,10 @@ body {
 }
 .container_perfil {
   display: flex;
+  background-color: #f8fafb;
+  padding: 0 0.5rem;
+  border-radius: 35px;
+  cursor: pointer;
 }
 .container_logo {
   display: flex;
@@ -223,4 +233,11 @@ body {
   border-radius: 150px;
   line-height: 1;
   cursor: pointer;
+}
+
+.head_catalog {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2rem 0;
 }

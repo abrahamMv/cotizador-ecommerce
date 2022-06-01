@@ -4,12 +4,20 @@ import { useContext, useEffect } from "react";
 import { TableBody } from "../../components/UI";
 import { Typography } from "@mui/material";
 import { QuotationContext } from "../../context/quotation";
+import { useRouter } from "next/router";
 
 export const RenderTable = () => {
-  const { getBestQuotations, bestQuotations } = useContext(QuotationContext);
+  const { getBestQuotations, bestQuotations, getAllQuotations } =
+    useContext(QuotationContext);
+
+  const router = useRouter();
 
   useEffect(() => {
-    getBestQuotations();
+    if (router.pathname === "/quote") {
+      getAllQuotations();
+    } else {
+      getBestQuotations();
+    }
   }, []);
   return (
     <>

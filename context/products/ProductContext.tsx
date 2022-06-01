@@ -6,6 +6,7 @@ interface ContextProps {
   bestProducts: GetBestQualificated[];
   product?: GetBestQualificated;
 
+  getAllProducts: () => Promise<void>;
   getBestProductQualificated: () => Promise<void>;
   getProductById: (id: string) => Promise<void>;
   qualifyProduct: (
