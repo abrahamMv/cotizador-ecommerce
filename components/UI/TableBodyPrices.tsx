@@ -1,13 +1,23 @@
+import React, { useState } from "react";
 import { Button } from "@mui/material";
-import { Price } from "../../interfaces";
+import { Price, GetQuotationByUserResponse } from "../../interfaces";
 import { formatMoney } from "../../utils";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import { ModalQuotations } from "./ModalQuotations";
 
 interface Props {
   shopInfo: Price;
+  myQuotation?: GetQuotationByUserResponse[];
+  addToQuotation: Function;
 }
 
-export const TableBodyPrices = ({ shopInfo }: Props) => {
+export const TableBodyPrices = ({
+  shopInfo,
+  myQuotation,
+  addToQuotation,
+}: Props) => {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <tr className="table_body_shop">
       <td className="item_table_shop">{shopInfo.name}</td>
@@ -24,10 +34,21 @@ export const TableBodyPrices = ({ shopInfo }: Props) => {
             marginTop: 2,
             fontSize: 10,
           }}
+          onClick={() => {
+            setOpenModal(!openModal);
+          }}
         >
           <KeyboardArrowDownOutlinedIcon />
           Agregar a cotizacion
         </Button>
+
+        <ModalQuotations
+          open={openModal}
+          quotationList={myQuotation}
+          handleClose={setOpenModal}
+          shopInfo={shopInfo}
+          addToQuotation={addToQuotation}
+        />
       </td>
     </tr>
   );

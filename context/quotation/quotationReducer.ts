@@ -27,7 +27,11 @@ export const quotationReducer = (
         ...state,
         quotation: action.payload,
       };
-
+    case "Quotation - quotationByUser":
+      return {
+        ...state,
+        myQuotation: action.payload,
+      };
     default:
       return state;
   }

@@ -5,22 +5,26 @@ import { ProductContext } from "../../context/products";
 import { QuotationContext } from "../../context/quotation";
 import { Typography, Rating } from "@mui/material";
 import { TableBodyPrices } from "../../components/UI";
+import { credentials } from "../../utils/credentials";
 
 const index = () => {
   const router = useRouter();
   const { getProductById, product, qualifyProduct } =
     useContext(ProductContext);
 
-  const { getUserQuotations } = useContext(QuotationContext);
+  const { getQuotationByUser, myQuotation, addToQuotation } =
+    useContext(QuotationContext);
 
   const [calification, setCalification] = useState<number | null>(5);
   useEffect(() => {
     if (router.query.id) {
       getProductById(router.query.id as string);
     }
-
-    getUserQuotations();
   }, [router.query]);
+
+  useEffect(() => {
+    getQuotationByUser(credentials.getUser()?.id);
+  }, []);
 
   return (
     <Layout>
@@ -132,7 +136,12 @@ const index = () => {
                 <tbody>
                   {product?.prices.length! > 0 &&
                     product?.prices.map((shop) => (
-                      <TableBodyPrices key={shop.id} shopInfo={shop} />
+                      <TableBodyPrices
+                        myQuotation={myQuotation}
+                        key={shop.id}
+                        shopInfo={shop}
+                        addToQuotation={addToQuotation}
+                      />
                     ))}
                 </tbody>
               </table>

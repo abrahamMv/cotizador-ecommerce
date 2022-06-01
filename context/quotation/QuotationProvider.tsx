@@ -20,7 +20,7 @@ export interface QuotationState {
 const Quotation_INITIAL_STATE: QuotationState = {
   bestQuotations: [],
   quotation: undefined,
-  myQuotation: undefined,
+  myQuotation: [],
   quotationByUser: [],
 };
 
@@ -76,26 +76,28 @@ export const QuotationProvider: FC<PropsChildren> = ({ children }) => {
     }
   };
 
-  const getUserQuotations = async () => {
+  const addToQuotation = async (id: string, shopProductId: string) => {
     try {
-      const { data } = await apiEcommerce.get(
-        `/quotation/all/${credentials.getUser()?.id}`
-      );
+      const { data } = await apiEcommerce.put("/quotation/add/product", {
+        quotation_id: id,
+        shop_has_product_id: shopProductId,
+      });
 
       console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <QuotationContext.Provider
       value={{
         ...state,
-        getUserQuotations,
         getBestQuotations,
         getQuotationBYId,
         getQuotationByUser,
         likeQuotation,
+        addToQuotation,
       }}
     >
       {children}
